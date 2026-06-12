@@ -1,0 +1,52 @@
+[project]
+name = "job-seeker"
+version = "0.1.0"
+description = "Job Seeker Monorepo Root Project"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-google-genai>=4.2.4",
+    "poethepoet",
+    "pytest",
+]
+
+[tool.uv.workspace]
+members = [
+    "apps/*",
+    "packages/*"
+]
+
+exclude = [
+    "apps/gui"
+]
+
+[tool.poe.tasks]
+start-db = { cmd = "docker compose up -d", help = "Start local PostgreSQL database using Docker Compose" }
+stop-db = { cmd = "docker compose down", help = "Stop and remove local PostgreSQL database container" }
+db-upgrade = { cmd = "alembic upgrade head", help = "Upgrade database schema to the latest version", env = { PYTHONPATH = "." } }
+db-migrate = { cmd = "alembic revision --autogenerate", help = "Create a new database migration script based on models", env = { PYTHONPATH = "." } }
+
+[tool.poe.tasks.crawl]
+cmd = "python apps/crawler/main.py"
+help = "Run the job seeker crawler scraper"
+env = { PYTHONPATH = "." }
+
+[tool.poe.tasks.sniff]
+cmd = "python apps/crawler/sniff_config.py"
+help = "Force sniff pagination and cookie configuration for companies"
+env = { PYTHONPATH = "." }
+
+
+[tool.poe.tasks.consume]
+cmd = "python apps/crawler/detail_consumer.py"
+help = "Run the job detail scraper consumer"
+env = { PYTHONPATH = "." }
+
+[tool.poe.tasks.server]
+cmd = "uvicorn apps.server.main:app --reload"
+help = "Start FastAPI background backend server"
+env = { PYTHONPATH = "." }
+
+[tool.poe.tasks.test]
+cmd = "pytest tests -v"
+help = "Run Pytest unit tests for deduplication and DB models"
+env = { PYTHONPATH = "." }

@@ -1,0 +1,59 @@
+# Job Seeker Smart Crawler Configuration Example
+# Copy this file and rename it to config.yaml, then fill in your API Key and configuration items.
+
+# Database Configuration
+database:
+  # Supports standard PostgreSQL connection string, can also be overridden by DATABASE_URL environment variable
+  dsn: "postgresql://postgres:postgres@localhost:5432/job_seeker"
+
+# Large Language Model (LLM) Configuration
+llm:
+  # Supported providers: google_genai, openai, ollama, etc.
+  #====================================
+  # provider: "google_genai"
+  # model: "gemini-2.5-flash-lite"
+  # model_tokens: 65535
+  # api_key: "<YOUR_GEMINI_API_KEY>" # Enter your Gemini API Key, or pass it via the GEMINI_API_KEY environment variable
+  #====================================
+  provider: "openai"
+  model: "xopqwen36v35b"
+  model_tokens: 16384
+  api_key: "<YOUR_OPENAI_API_KEY>" # Enter your API Key, or pass it via the OPENAI_API_KEY environment variable
+  base_url: "https://maas-api.cn-huabei-1.xf-yun.com/v2"
+
+# Crawler Control
+crawler:
+  # Limit of concurrency for each crawl
+  concurrency_limit: 2
+  # Page load timeout (milliseconds)
+  timeout: 30000
+  # Whether to enable local JSON backup export
+  export_json: true
+  export_dir: "./exports"
+
+# Target companies and recruitment homepage URL configurations
+companies:
+  - name: "The Coca-Cola Company"
+    url: "https://careers.coca-colacompany.com/"
+    is_active: true
+    downloader:
+      max_pages: 25
+      page_delay: 3000
+  - name: "Amazon - SG"
+    url: "https://www.amazon.jobs/en/location/singapore-singapore"
+    is_active: true
+    downloader:
+      max_pages: 25
+      page_delay: 3000
+  - name: "Apple -SG"
+    url: "https://jobs.apple.com/en-sg/search?location=singapore-SGP"
+    is_active: true
+    downloader:
+      max_pages: 10
+      page_delay: 3000
+  - name: "Google -SG"
+    url: "https://www.google.com/about/careers/applications/jobs/results/?q&location=Singapore&hl=en"
+    is_active: true
+    downloader:
+      max_pages: 12
+      page_delay: 3000

@@ -1,0 +1,6 @@
+# Pyrefly configuration file
+# Docs: https://pyrefly.org/getting-started
+
+search-path = [
+  "../../packages/shared"
+]

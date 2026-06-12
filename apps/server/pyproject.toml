@@ -1,0 +1,13 @@
+[project]
+name = "server"
+version = "0.1.0"
+description = "Job Seeker FastAPI Server backend"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "shared",
+    "python-multipart",
+]
+
+[tool.uv.sources]
+shared = { workspace = true }

@@ -1,0 +1,9 @@
+scrapegraphai
+sqlalchemy
+psycopg2-binary
+playwright
+pyyaml
+tenacity
+pytest
+poethepoet
+

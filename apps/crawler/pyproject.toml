@@ -1,0 +1,13 @@
+[project]
+name = "crawler"
+version = "0.1.0"
+description = "Job Seeker Crawler Scraper application"
+dependencies = [
+    "scrapegraphai>=2.0.0",
+    "shared",
+    "langgraph>=0.1.0",
+    "langchain-core>=0.2.0",
+]
+
+[tool.uv.sources]
+shared = { workspace = true }
