@@ -80,23 +80,46 @@ Start the detail consumer to parse job description structures and generate embed
 uv run poe consume
 ```
 
-### 4. Running the Backend Server
+### 4. Running Backend and Frontend (Concurrently)
 
-Launch the FastAPI backend server:
-```bash
-uv run poe server
-```
-*The API server will reload on `http://127.0.0.1:8000`.*
+For convenience, you can start both the FastAPI backend server and the frontend client concurrently with a single command from the project root. (Ensure you have run `npm install` in `apps/gui` first).
 
-### 5. Running the Desktop GUI
+- **Browser Web Mode** (Recommended, does not require Rust):
+  ```bash
+  uv run poe start-dev
+  ```
+  *This concurrently launches the FastAPI server and the Vite development server. Open `http://localhost:1420` in your browser to preview.*
 
-Change to the GUI directory, install NPM dependencies, and start the development Tauri app:
-```bash
-cd apps/gui
-npm install
-# Run Tauri in dev mode (requires FastAPI server running or runs in mock-fallback mode)
-npm run tauri dev
-```
+- **Desktop GUI Mode** (Requires Rust / Tauri build tools installed):
+  ```bash
+  uv run poe start-desktop
+  ```
+  *This concurrently launches the FastAPI server and pulls up the native Tauri desktop window.*
+
+### 5. Running Independently
+
+If you want to run the backend or frontend separately:
+
+- **Run Backend Server**:
+  ```bash
+  uv run poe server
+  ```
+  *Runs on `http://127.0.0.1:8000`.*
+
+- **Run Frontend Client (Browser Mode)**:
+  ```bash
+  uv run poe gui-dev
+  ```
+
+- **Run Frontend Client (Tauri Desktop)**:
+  ```bash
+  uv run poe gui-desktop
+  ```
+  *Or manually run:*
+  ```bash
+  cd apps/gui
+  npm run tauri dev
+  ```
 
 ---
 

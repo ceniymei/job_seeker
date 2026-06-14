@@ -50,3 +50,19 @@ env = { PYTHONPATH = "." }
 cmd = "pytest tests -v"
 help = "Run Pytest unit tests for deduplication and DB models"
 env = { PYTHONPATH = "." }
+
+[tool.poe.tasks.gui-dev]
+cmd = "npm --prefix apps/gui run dev"
+help = "Start frontend Vite development server (Browser mode)"
+
+[tool.poe.tasks.gui-desktop]
+cmd = "npm --prefix apps/gui run tauri dev"
+help = "Start Tauri desktop window (Requires Rust environment)"
+
+[tool.poe.tasks.start-dev]
+parallel = ["server", "gui-dev"]
+help = "Start both FastAPI backend server and Vite frontend (Browser mode) concurrently"
+
+[tool.poe.tasks.start-desktop]
+parallel = ["server", "gui-desktop"]
+help = "Start both FastAPI backend server and Tauri desktop app (Requires Rust environment) concurrently"
