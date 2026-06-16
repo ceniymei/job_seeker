@@ -296,6 +296,29 @@ def sniff_traffic_and_decision(state: Dict[str, Any]) -> Dict[str, Any]:
     pag_type = str(decision.get("pagination_type") or "none").lower()
     url_template = decision.get("url_template")
     
+    # Pre-test API accessibility for 'api_direct' pagination type to prevent 401/403 auth or 404 errors
+    if pag_type == "api_direct" and url_template:
+        test_url = url_template.replace("{page}", "1")
+        try:
+            import httpx
+            headers = {
+                "User-Agent": downloader.user_agent,
+                "Accept": "application/json"
+            }
+            with httpx.Client(headers=headers, timeout=5.0, follow_redirects=True) as client:
+                res = client.get(test_url)
+                if res.status_code >= 400:
+                    logger.warning(f"RootAgent: Direct API '{test_url}' returned error status {res.status_code}. Correcting pagination_type to 'next_button'.")
+                    pag_type = "next_button"
+                    url_template = None
+                    if not next_page_selector:
+                        from apps.crawler.scraper import scraper
+                        fallback = scraper._extract_fallback_next_selector(soup)
+                        if fallback:
+                            next_page_selector = fallback
+        except Exception as api_err:
+            logger.warning(f"RootAgent: Failed to pre-test API accessibility: {str(api_err)}")
+            
     if pag_type == "api_direct" and url_template:
         assigned_agent = "api"
     elif pag_type == "url_template" and url_template:

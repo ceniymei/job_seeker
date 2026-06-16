@@ -14,15 +14,14 @@ def run_traditional_agent(state: Dict[str, Any]) -> Dict[str, Any]:
     company_config = state.get("company_config") or {}
     
     url_template = crawl_config.get("url_template")
+    downloader_cfg = company_config.get("downloader", {})
     
     if not url_template:
-        return {
-            "error_message": "No URL template found in crawl config.",
-            "is_successful": False
-        }
-        
-    downloader_cfg = company_config.get("downloader", {})
-    max_pages = int(downloader_cfg.get("max_pages", 5))
+        url_template = homepage_url
+        max_pages = 1
+        logger.info(f"TraditionalHtmlAgent: No URL template found in crawl config. Falling back to single-page crawl of homepage: {homepage_url}")
+    else:
+        max_pages = int(downloader_cfg.get("max_pages", 5))
     scroll_count = int(downloader_cfg.get("scroll_count", 0))
     scroll_delay = int(downloader_cfg.get("scroll_delay", 1500))
     
