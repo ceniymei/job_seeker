@@ -57,3 +57,20 @@ companies:
     downloader:
       max_pages: 12
       page_delay: 3000
+  - name: "NVIDIA"
+    url: "https://jobs.nvidia.com/careers"
+    is_active: true
+    downloader:
+      max_pages: 50
+      page_delay: 3000
+  - name: "bosch"
+    url: "https://jobs.bosch.com/en/?pages=10&country=sg"
+    is_active: true
+    downloader:
+      max_pages: 5
+      page_delay: 10000
+  - name: "OpenAI"
+    url: "https://openai.com/careers/search/"
+    is_active: true
+    downloader:
+      max_pages: 1
