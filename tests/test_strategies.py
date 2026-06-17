@@ -62,8 +62,8 @@ def test_url_recovery_via_mock_llm(monkeypatch):
     # 2. Simulate LLM extracting only partial URL lists missing the /job/ID part
     mock_llm_result = {
         "job_urls": [
-            "https://careers.coca-colacompany.com/senior-brand-manager-netherlands-rotterdam-nl/",
-            "https://careers.coca-colacompany.com/director-operations/"
+            "https://careers.beveragecorp.example.com/senior-brand-manager-netherlands-rotterdam-nl/",
+            "https://careers.beveragecorp.example.com/director-operations/"
         ]
     }
 
@@ -73,35 +73,35 @@ def test_url_recovery_via_mock_llm(monkeypatch):
     monkeypatch.setattr(scraper, "_is_llm_configured", lambda: True)
 
     # 4. Perform URL extraction and recovery
-    base_url = "https://careers.coca-colacompany.com/"
+    base_url = "https://careers.beveragecorp.example.com/"
     recovered_urls = scraper.extract_job_urls(mock_html, base_url=base_url)
 
     # 5. Assert all extracted URLs are correctly recovered with /job/ID formats
-    assert "https://careers.coca-colacompany.com/job/23465485/senior-brand-manager-netherlands-rotterdam-nl/" in recovered_urls
-    assert "https://careers.coca-colacompany.com/job/12345/director-operations/" in recovered_urls
+    assert "https://careers.beveragecorp.example.com/job/23465485/senior-brand-manager-netherlands-rotterdam-nl/" in recovered_urls
+    assert "https://careers.beveragecorp.example.com/job/12345/director-operations/" in recovered_urls
     assert len(recovered_urls) == 2
 
 
-def test_apple_details_url_heuristic_extraction():
+def test_fruitsystems_details_url_heuristic_extraction():
     from apps.crawler.scraper import scraper
 
-    # 1. Construct mock HTML containing typical Apple /details/ job paths
+    # 1. Construct mock HTML containing typical FruitSystems /details/ job paths
     mock_html = """
     <html>
         <body>
-            <a href="https://jobs.apple.com/en-sg/details/200596262-3278/site-reliability-engineer?team=CORSV">SRE</a>
+            <a href="https://jobs.fruitsystems.example.com/en-sg/details/200596262-3278/site-reliability-engineer?team=CORSV">SRE</a>
             <a href="/en-sg/details/200338277-3278/channel-fulfillment-analyst-12-months-contract?team=OPMFG">Analyst</a>
-            <a href="https://jobs.apple.com/en-sg/details/111111111-3278/some-job">Other Job</a>
+            <a href="https://jobs.fruitsystems.example.com/en-sg/details/111111111-3278/some-job">Other Job</a>
         </body>
     </html>
     """
 
     # 2. Perform URL extraction; it should hit the heuristic matcher directly (>= 3 matching URLs), bypassing LLM operations
-    base_url = "https://jobs.apple.com/"
+    base_url = "https://jobs.fruitsystems.example.com/"
     extracted_urls = scraper.extract_job_urls(mock_html, base_url=base_url)
 
     # 3. Verify that the extracted links are the actual absolute addresses and not LLM-hallucinated as /job/12345/
-    assert "https://jobs.apple.com/en-sg/details/200596262-3278/site-reliability-engineer?team=CORSV" in extracted_urls
-    assert "https://jobs.apple.com/en-sg/details/200338277-3278/channel-fulfillment-analyst-12-months-contract?team=OPMFG" in extracted_urls
-    assert "https://jobs.apple.com/en-sg/details/111111111-3278/some-job" in extracted_urls
+    assert "https://jobs.fruitsystems.example.com/en-sg/details/200596262-3278/site-reliability-engineer?team=CORSV" in extracted_urls
+    assert "https://jobs.fruitsystems.example.com/en-sg/details/200338277-3278/channel-fulfillment-analyst-12-months-contract?team=OPMFG" in extracted_urls
+    assert "https://jobs.fruitsystems.example.com/en-sg/details/111111111-3278/some-job" in extracted_urls
     assert len(extracted_urls) == 3

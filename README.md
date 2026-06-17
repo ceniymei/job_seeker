@@ -132,6 +132,17 @@ uv run poe test
 
 ---
 
+## ⚠️ Disclaimer / 免责声明
+
+**This project is for educational, personal, and research purposes only.**
+
+By using this software, you agree that:
+1. You will use this tool in compliance with all applicable local, national, and international laws and regulations.
+2. The authors and contributors are not responsible for any misuse of this tool, including but not limited to target website overload, IP blocklists, account suspension, or violation of target websites' `robots.txt` or Terms of Service (ToS).
+3. Users should obtain explicit authorization from target website owners before running any automated crawlers in production.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

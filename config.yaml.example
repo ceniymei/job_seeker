@@ -33,44 +33,44 @@ crawler:
 
 # Target companies and recruitment homepage URL configurations
 companies:
-  - name: "The Coca-Cola Company"
-    url: "https://careers.coca-colacompany.com/"
+  - name: "BeverageCorp"
+    url: "https://careers.beveragecorp.example.com"
     is_active: true
     downloader:
       max_pages: 25
       page_delay: 3000
-  - name: "Amazon - SG"
-    url: "https://www.amazon.jobs/en/location/singapore-singapore"
+  - name: "RetailGiant - SG"
+    url: "https://careers.retailgiant.example.com/location/singapore"
     is_active: true
     downloader:
       max_pages: 25
       page_delay: 3000
-  - name: "Apple -SG"
-    url: "https://jobs.apple.com/en-sg/search?location=singapore-SGP"
+  - name: "FruitSystems - SG"
+    url: "https://jobs.fruitsystems.example.com/en-sg/search"
     is_active: true
     downloader:
       max_pages: 10
       page_delay: 3000
-  - name: "Google -SG"
-    url: "https://www.google.com/about/careers/applications/jobs/results/?q&location=Singapore&hl=en"
+  - name: "TechCorp - SG"
+    url: "https://careers.techcorp.example.com/jobs"
     is_active: true
     downloader:
       max_pages: 12
       page_delay: 3000
-  - name: "NVIDIA"
-    url: "https://jobs.nvidia.com/careers"
+  - name: "ChipCraft"
+    url: "https://jobs.chipcraft.example.com/careers"
     is_active: true
     downloader:
       max_pages: 50
       page_delay: 3000
-  - name: "bosch"
-    url: "https://jobs.bosch.com/en/?pages=10&country=sg"
+  - name: "IndustrialIoT"
+    url: "https://jobs.industrialiot.example.com"
     is_active: true
     downloader:
       max_pages: 5
       page_delay: 10000
-  - name: "OpenAI"
-    url: "https://openai.com/careers/search/"
+  - name: "CogitAI"
+    url: "https://cogitai.example.com/careers/search/"
     is_active: true
     downloader:
       max_pages: 1
